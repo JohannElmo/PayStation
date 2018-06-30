@@ -1,62 +1,74 @@
-package paystation.domain;
+package Test.domain;
 
 import org.junit.*;
+
+import paystation.domain.IllegalCoinException;
+import paystation.domain.PayStation;
+import paystation.domain.PayStationImpl;
+import paystation.domain.ProgressiveRateStrategy;
+
+
 import static org.junit.Assert.*;
 
-/** Testcases for the progressive rate strategy.
- 
-   This source code is from the book 
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published by CRC Press.
-   Author: 
-     Henrik B Christensen 
-     Department of Computer Science
-     Aarhus University
-   
-   Please visit http://www.baerbak.com/ for further information.
+// Test cases for the BetaTown pay station with progressive rate policy.
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
- 
-       http://www.apache.org/licenses/LICENSE-2.0
- 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-*/
 public class TestProgressiveRate {
-  RateStrategy rs;
-
-  @Before public void setUp() {
-    rs = new ProgressiveRateStrategy();
+  PayStation ps;
+  /** Fixture for pay station testing. */
+  @Before
+  public void setUp() {
+    ps = new PayStationImpl( new ProgressiveRateStrategy() );
   }
-  
+
   /** Test a single hour parking */
-  @Test public void shouldDisplay60MinFor150cent() {
+  @Test public void shouldDisplay60MinFor150cent() 
+    throws IllegalCoinException { 
     // First hour: $1.5
-    assertEquals( 60 /*minutes*/, rs.calculateTime(150) ); 
+    addOneDollar();
+    addHalfDollar();
+
+    assertEquals( 60 /*minutes*/, ps.readDisplay() ); 
   }
 
   /** Test two hours parking */
-  @Test public void shouldGive120MinFor350cent() {
+  @Test public void shouldDisplay120MinFor350cent() 
+    throws IllegalCoinException { 
     // Two hours: $1.5+2.0
-    assertEquals( 2 * 60 /*minutes*/ , rs.calculateTime(350) ); 
+    addOneDollar();
+    addOneDollar();
+    addOneDollar();
+    addHalfDollar();
+
+    assertEquals( 2 * 60 /*minutes*/ , ps.readDisplay() ); 
   }
 
   /** Test three hours parking */
-  @Test public void shouldGive180MinFor650cent() {
+  @Test public void shouldDisplay180MinFor650cent() 
+    throws IllegalCoinException { 
     // Three hours: $1.5+2.0+3.0
-    assertEquals( 3 * 60 /*minutes*/ , rs.calculateTime(650) ); 
+    addOneDollar(); addHalfDollar();
+    addOneDollar(); addOneDollar();
+    addOneDollar(); addOneDollar(); addOneDollar();
+
+    assertEquals( 3 * 60 /*minutes*/ , ps.readDisplay() ); 
   }
 
   /** Test four hours parking */
-  @Test public void shouldGive240MinFor950cent() {
+  @Test public void shouldDisplay240MinFor950cent() 
+    throws IllegalCoinException { 
     // Three hours: $1.5+2.0+3.0
-    assertEquals( 4 * 60 /*minutes*/ , rs.calculateTime(950) ); 
+    addOneDollar(); addHalfDollar();
+    addOneDollar(); addOneDollar();
+    addOneDollar(); addOneDollar(); addOneDollar();
+    addOneDollar(); addOneDollar(); addOneDollar();
+
+    assertEquals( 4 * 60 /*minutes*/ , ps.readDisplay() ); 
+  }
+
+  private void addHalfDollar() throws IllegalCoinException  {
+    ps.addPayment( 25 ); ps.addPayment( 25 ); 
+  }
+  private void addOneDollar() throws IllegalCoinException {
+    addHalfDollar(); addHalfDollar();
   }
 } 
