@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PayStation" default="help" basedir=".">
+	<target name="help">
+		<echo>Pay Station build managemnet</echo>
+	</target>
+	<target name="build-src">
+		<javac srcdir="src">
+		</javac>
+	</target>
+</project>
