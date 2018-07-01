@@ -1,4 +1,4 @@
-package Test.domain;
+package paystation.domain;
 
 /*
  *  This test case is testing the ProgressiveRateStrategy class

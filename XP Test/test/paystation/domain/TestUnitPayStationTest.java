@@ -1,4 +1,4 @@
-package Test.domain;
+package paystation.domain;
 
 /**
  * This is a unit test of the pay station. It

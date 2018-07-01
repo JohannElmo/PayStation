@@ -1,6 +1,6 @@
 package paystation.domain;
 
-
+import paystation.domain.RateStrategy;
 
 public class PayStationImpl implements PayStation {
   private int insertedSoFar;

@@ -1,4 +1,4 @@
-package Test.domain;
+package paystation.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 

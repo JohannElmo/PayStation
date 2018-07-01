@@ -1,4 +1,4 @@
-package Test.domain;
+package paystation.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +10,7 @@ import paystation.domain.LinearRateStrategy;
 import paystation.domain.PayStation;
 import paystation.domain.PayStationImpl;
 import paystation.domain.ProgressiveRateStrategy;
+
 
 class TestIntegration {
 	PayStation ps;

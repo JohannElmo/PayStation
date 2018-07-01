@@ -1,4 +1,5 @@
 package paystation.domain;
+
 /** A progressive calculation rate strategy.
 
   Responsibilities:
