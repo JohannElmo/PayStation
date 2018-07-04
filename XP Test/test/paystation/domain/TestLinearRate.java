@@ -1,18 +1,18 @@
 package paystation.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import paystation.domain.LinearRateStrategy;
 import paystation.domain.RateStrategy;
 
-class TestLinearRate {
+public class TestLinearRate {
 	RateStrategy rate;
 	
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		rate = new LinearRateStrategy();
 	}
 	
@@ -24,7 +24,7 @@ class TestLinearRate {
 	 */
 
 	@Test
-	void sholdDisplay120MinFor300Cent() 
+	public void sholdDisplay120MinFor300Cent() 
 	{
 		assertEquals(300/5 * 2 /*minutes*/ , rate.calculateTime(300));
 	}

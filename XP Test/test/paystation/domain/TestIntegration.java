@@ -1,9 +1,7 @@
 package paystation.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import paystation.domain.IllegalCoinException;
 import paystation.domain.LinearRateStrategy;
@@ -12,11 +10,11 @@ import paystation.domain.PayStationImpl;
 import paystation.domain.ProgressiveRateStrategy;
 
 
-class TestIntegration {
+public class TestIntegration {
 	PayStation ps;
 
 	@Test
-	void shouldIntegrateLinearRateCorrectly() throws IllegalCoinException {
+	public void shouldIntegrateLinearRateCorrectly() throws IllegalCoinException {
 		//set up pay station with Linear rate strategy
 		ps = new PayStationImpl(new LinearRateStrategy() );
 		addOneDollar(); addOneDollar();
@@ -25,7 +23,7 @@ class TestIntegration {
 	}
 	
 	@Test
-	void shouldIntegrateProgressiveRateCorrectly() throws IllegalCoinException {
+	public void shouldIntegrateProgressiveRateCorrectly() throws IllegalCoinException {
 		// Set up pay station with progressive rate strategy
 		ps = new PayStationImpl(new ProgressiveRateStrategy() );
 		addOneDollar(); addOneDollar();

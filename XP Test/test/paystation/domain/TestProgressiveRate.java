@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 
 // Test cases for the BetaTown pay station with progressive rate policy.
 
+
 public class TestProgressiveRate {
   PayStation ps;
   /** Fixture for pay station testing. */

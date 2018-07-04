@@ -18,10 +18,10 @@ import paystation.domain.PayStation;
 import paystation.domain.PayStationImpl;
 import paystation.domain.Receipt;
 
-class TestUnitPayStationTest {
+public class TestUnitPayStationTest {
 	PayStation ps;
 	@BeforeEach
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
 		ps = new PayStationImpl(new One2OneRateStrategy());
 	}
 	/*
@@ -29,7 +29,7 @@ class TestUnitPayStationTest {
 	 * calculation.
 	 */
 	@Test		
-	void shouldReturnValidReceiptWhenBuy() throws IllegalCoinException 
+	public void shouldReturnValidReceiptWhenBuy() throws IllegalCoinException 
 	{
 		// 5 cent = 5 minutes parking
 		ps.addPayment(5);
@@ -43,7 +43,7 @@ class TestUnitPayStationTest {
 	 * @throws IllegalCoinException 
 	 */
 	@Test
-	void shouldResetWhenCancel() throws IllegalCoinException
+	public void shouldResetWhenCancel() throws IllegalCoinException
 	{
 		ps.addPayment(5);
 		ps.cancel();
