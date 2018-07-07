@@ -6,7 +6,8 @@ public class AlternatingRateStrategy implements RateStrategy {
 	WeekendDecisionStrategy weekendDecision;
 	
 	/** Constructing an Alternating rate strategy */
-	public AlternatingRateStrategy(RateStrategy WeekendStrategy, RateStrategy WeekDayStrategy,
+	public AlternatingRateStrategy(RateStrategy WeekendStrategy, 
+			RateStrategy WeekDayStrategy,
 			WeekendDecisionStrategy isWeekend) {
 		this.WeekendStrategy = WeekendStrategy;
 		this.WeekDayStrategy = WeekDayStrategy;

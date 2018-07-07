@@ -14,62 +14,39 @@ import static org.junit.Assert.*;
 
 
 public class TestProgressiveRate {
-  PayStation ps;
+  RateStrategy rs;
   /** Fixture for pay station testing. */
   @Before
   public void setUp() {
-    ps = new PayStationImpl( new ProgressiveRateStrategy() );
+    rs = new ProgressiveRateStrategy();
   }
 
   /** Test a single hour parking */
   @Test public void shouldDisplay60MinFor150cent() 
     throws IllegalCoinException { 
     // First hour: $1.5
-    addOneDollar();
-    addHalfDollar();
-
-    assertEquals( 60 /*minutes*/, ps.readDisplay() ); 
+    assertEquals( 60 /*minutes*/, rs.calculateTime(150) ); 
   }
 
   /** Test two hours parking */
   @Test public void shouldDisplay120MinFor350cent() 
     throws IllegalCoinException { 
     // Two hours: $1.5+2.0
-    addOneDollar();
-    addOneDollar();
-    addOneDollar();
-    addHalfDollar();
-
-    assertEquals( 2 * 60 /*minutes*/ , ps.readDisplay() ); 
+    assertEquals( 2 * 60 /*minutes*/ , rs.calculateTime(350) ); 
   }
 
   /** Test three hours parking */
   @Test public void shouldDisplay180MinFor650cent() 
     throws IllegalCoinException { 
     // Three hours: $1.5+2.0+3.0
-    addOneDollar(); addHalfDollar();
-    addOneDollar(); addOneDollar();
-    addOneDollar(); addOneDollar(); addOneDollar();
-
-    assertEquals( 3 * 60 /*minutes*/ , ps.readDisplay() ); 
+    assertEquals( 3 * 60 /*minutes*/ , rs.calculateTime(650) ); 
   }
 
   /** Test four hours parking */
   @Test public void shouldDisplay240MinFor950cent() 
     throws IllegalCoinException { 
     // Three hours: $1.5+2.0+3.0
-    addOneDollar(); addHalfDollar();
-    addOneDollar(); addOneDollar();
-    addOneDollar(); addOneDollar(); addOneDollar();
-    addOneDollar(); addOneDollar(); addOneDollar();
-
-    assertEquals( 4 * 60 /*minutes*/ , ps.readDisplay() ); 
+    assertEquals( 4 * 60 /*minutes*/ , rs.calculateTime(950) ); 
   }
 
-  private void addHalfDollar() throws IllegalCoinException  {
-    ps.addPayment( 25 ); ps.addPayment( 25 ); 
-  }
-  private void addOneDollar() throws IllegalCoinException {
-    addHalfDollar(); addHalfDollar();
-  }
 } 

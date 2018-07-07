@@ -1,6 +1,7 @@
 package paystation.domain;
 
 import paystation.domain.RateStrategy;
+import paystation.domain.PayStationFactory;
 
 public class PayStationImpl implements PayStation {
   private int insertedSoFar;
@@ -8,13 +9,16 @@ public class PayStationImpl implements PayStation {
 
   /** the strategy for rate calculations */
   private RateStrategy rateStrategy;
+  /** The factory defining strategies. */
+  private PayStationFactory factory;
   
   /** Construct a pay station instance with the given
       rate calculation strategy.
-      @param rateStrategy the rate calculation strategy to use
-  */
-  public PayStationImpl( RateStrategy rateStrategy ) {
-    this.rateStrategy = rateStrategy;
+      @param rateStrategy the rate calculation strategy to use */
+  public PayStationImpl( PayStationFactory factory ) {
+    this.factory = factory;
+    this.rateStrategy = factory.createRateStrategy();
+    reset();
   }
 
   public void addPayment( int coinValue ) 
@@ -32,16 +36,22 @@ public class PayStationImpl implements PayStation {
   public int readDisplay() {
     return timeBought;
   }
+  
+  /* Issuing a receipt */
   public Receipt buy() {
-    Receipt r = new ReceiptImpl(timeBought);
+    Receipt r = factory.createReceipt(timeBought);
     reset();
     return r;
   }
+  /* Canceling a transaction */
   public void cancel() {
     reset();
   }
+  
+  /* Method that resets the pay station */
   private void reset() {
     timeBought = insertedSoFar = 0;
   }
+
 }
 
