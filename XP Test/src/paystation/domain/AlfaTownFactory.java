@@ -7,7 +7,12 @@ public class AlfaTownFactory implements PayStationFactory {
 	}
 
 	public Receipt createReceipt(int parkingTime) {
-		return new StandardReceipt(parkingTime);
+		return new StandardReceipt(parkingTime, false, true);
 	}
+
+	public DisplayStrategy createDisplayStrategy() {
+		return new TimeBasedDisplayStrategy();
+	}
+
 
 }

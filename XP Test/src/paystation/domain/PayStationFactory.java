@@ -12,5 +12,11 @@ public interface PayStationFactory {
 	 * @param parkingTime the number of minutes the receipt
 	 * represents.*/
 	public Receipt createReceipt(int parkingTime);
+	
+	/**
+	 * Create instance of the display strategy to use.
+	 * @param timeBougt the number of minutes bought.
+	 */
+	public DisplayStrategy createDisplayStrategy();
 
 }

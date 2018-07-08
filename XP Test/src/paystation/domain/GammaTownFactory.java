@@ -12,4 +12,9 @@ public class GammaTownFactory implements PayStationFactory {
 		return new StandardReceipt(parkingTime);
 	}
 
+	public DisplayStrategy createDisplayStrategy() {
+		return new ValueBasedDisplayStrategy();
+	}
+
+
 }

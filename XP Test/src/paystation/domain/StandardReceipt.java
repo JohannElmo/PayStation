@@ -4,28 +4,45 @@ import java.io.PrintStream;
 import java.time.LocalTime;
 
 /**
- * The Receipt object receive the right time 
- * (in minutes) calculated based on the
- * amount of coins inserted into the pay station
- * in some currency.
+ * The Standard Receipts job is to print
+ * a valid receipt. The print method
+ * is currently using a parametric approach
+ * in choosing the correct configuration when
+ * printing.
  * 
  * @author johann
  *
  */
-public class StandardReceipt implements Receipt {
-  private int value;
-  private Boolean barcode;
+	public class StandardReceipt implements Receipt {
+		private int value;
+		private Boolean barcode;
+		private Boolean timeBasedReceipt;
   
-	/* Constructing a standard receipt option 1 */
-	public StandardReceipt(int value, Boolean barcode) {
-		this.value = value;
-		this.barcode = barcode;
-	}
 	
-	/* Constructing a standard receipt option 2 */
-	public StandardReceipt(int value) {
-		this(value,false);
+  	/** Constructing a receipt with no barcode and in
+  	 * value display stile (prints number of minutes
+  	 * the user has bought).
+  	 * @param value the minutes bought.
+  	 */
+  	public StandardReceipt(int value) {
+  		this.value = value;
+		this.barcode = false;
+		this.timeBasedReceipt = false;
 	}
+  	/**
+	 * Constructing a standard receipt.
+	 * @param value the minutes bought.
+	 * @param barcode barcode option.
+	 * @param timeBasedReceipt how should the receipt print
+	 * valid parking time.
+	 */
+  	public StandardReceipt(int value, Boolean barcode,
+  			boolean timeBasedReceipt) {
+  		this.value = value;
+		this.barcode = barcode;
+		this.timeBasedReceipt = timeBasedReceipt;
+	}
+  	
 	
 	public int value() {
 		return value;
@@ -35,16 +52,19 @@ public class StandardReceipt implements Receipt {
 		String valueString = ""+value;
 		if(valueString.length() == 1) {valueString = "00" + valueString;}
 		if(valueString.length() == 2) {valueString = "0" + valueString;}
+		/** This will only work on java platform 8. */
 		LocalTime time = LocalTime.now();
-		String hour = ""+time.getHour();
-		if(hour.length() == 1) {hour = "0"+hour;}
-		String min = ""+time.getMinute();
-		if(min.length() == 1) {min = "0"+min;}
 		stream.println("------------------------------------------------");
 		stream.println("-------  P A R K I N G    R E C E I P T --------");
-		stream.println("                Value "+valueString+
-				" minutes.");
-		stream.println("              Car Parked at "+hour + ":"+min);
+		/** If time based receipt stile is chosen the receipt prints "Expires" 
+		 * followed by the time the receipt expires. */
+		if(timeBasedReceipt) { stream.println("              Expires "+ time);}
+		/** If time based receipt stile is not chosen the receipt prints "value" 
+		 * followed by the number of minutes bought. */
+		else { stream.println("                Value "+valueString+
+				" minutes.");}
+		stream.println("              Car Parked at "+ time);
+		/** If the barcode option is chosen and extra barcode line is printed. */
 		if(barcode) 
 		{stream.println("|| ||||| | || ||| || ||  ||| | || |||| | || ||||");} 
 		stream.println("------------------------------------------------");	

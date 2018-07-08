@@ -11,5 +11,10 @@ public class TestTownFactory implements PayStationFactory {
 	public Receipt createReceipt(int parkingTime) {
 		return new StandardReceipt(parkingTime);
 		}
+
+	@Override
+	public DisplayStrategy createDisplayStrategy() {
+		return new ValueBasedDisplayStrategy();
+	}
 	
 }

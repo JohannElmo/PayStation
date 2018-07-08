@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.LocalTime;
 
 import org.junit.Test;
 
@@ -19,14 +20,22 @@ public class TestIntegration {
 		//set up pay station with AlfaTown factory
 		ps = new PayStationImpl(new AlfaTownFactory() );
 		addOneDollar(); addOneDollar();
-		//1st hour $1.5 and 20 min for 50 cents
-		assertEquals(80, ps.readDisplay() );
+		/**Alfa town implements time based display strategy
+		 * so pay station should display current time plus number
+		 * of minutes bought. $2 = 80 minutes */
+		LocalTime displayTime = LocalTime.now().plusMinutes(80);
+		String parkingTime = "" + displayTime.getHour();
+		parkingTime = parkingTime + displayTime.getMinute();
+		assertEquals("Should display time parked plus 80 minutes formatted "
+		  		+ "so that there is no semicolon separating hour and minute", 
+				  Integer.parseInt(parkingTime), ps.readDisplay() );
 		/* Issuing the fatory's receipt. */
 		Receipt receipt = ps.buy();
 		/* AlfaTown should not print barcode. */
 		assertEquals("Alfa Town receipt shold have 5 lines",
 				5, getReceiptLinesCount(receipt) );
 	}
+	
 	
 	@Test
 	public void shouldIntegrateProgressiveRateCorrectly() throws IllegalCoinException {

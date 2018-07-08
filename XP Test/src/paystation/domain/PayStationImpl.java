@@ -11,6 +11,8 @@ public class PayStationImpl implements PayStation {
   private RateStrategy rateStrategy;
   /** The factory defining strategies. */
   private PayStationFactory factory;
+  /** The display strategy of time bought */
+  private DisplayStrategy displayStrategy;
   
   /** Construct a pay station instance with the given
       rate calculation strategy.
@@ -18,6 +20,7 @@ public class PayStationImpl implements PayStation {
   public PayStationImpl( PayStationFactory factory ) {
     this.factory = factory;
     this.rateStrategy = factory.createRateStrategy();
+    this.displayStrategy = factory.createDisplayStrategy();
     reset();
   }
 
@@ -34,7 +37,7 @@ public class PayStationImpl implements PayStation {
     timeBought = rateStrategy.calculateTime(insertedSoFar);
   }
   public int readDisplay() {
-    return timeBought;
+    return displayStrategy.calculateOutput(timeBought);
   }
   
   /* Issuing a receipt */

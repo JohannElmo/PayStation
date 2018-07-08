@@ -8,7 +8,12 @@ public class BetaTownFactory implements PayStationFactory {
 	}
 
 	public Receipt createReceipt(int parkingTime) {
-		return new StandardReceipt(parkingTime,true);
+		return new StandardReceipt(parkingTime,true, false);
+	}
+
+	@Override
+	public DisplayStrategy createDisplayStrategy() {
+		return new ValueBasedDisplayStrategy();
 	}
 
 }

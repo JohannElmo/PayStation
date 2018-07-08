@@ -130,7 +130,7 @@ public class TestPayStation {
   }
   
   @Test
-	public void shouldPrintCorrectReceipt() {
+	public void shouldPrintStandardReceiptCorrectly() {
 	 /* Constructing a new StandardReceipt */
 	 Receipt receipt = new StandardReceipt(100);
 	 /* Constructing a ByteArrayOutputStream */
@@ -171,7 +171,7 @@ public class TestPayStation {
   @Test
   public void shoulPrintBarcodeReceiptCorrectly()
   {
-	  Receipt receipt = new StandardReceipt(100,true);
+	  Receipt receipt = new StandardReceipt(100,true,false);
 	  
 	  ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	  PrintStream ps = new PrintStream(baos);
@@ -183,8 +183,10 @@ public class TestPayStation {
 	  assertEquals("receipt with barcode should b 6 lines long", 6, lines.length);
   }
   
+  
   /* Making one dollar insert.*/
-  private void addOneDollar() throws IllegalCoinException {
+  private void addOneDollar() throws IllegalCoinException 
+  {
     ps.addPayment(25); ps.addPayment(25); 
     ps.addPayment(25); ps.addPayment(25); 
   }
